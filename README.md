@@ -4,7 +4,7 @@ Scala Actor Examples with Unit Tests
 This project contains examples of how to create and unit test [Akka](http://akka.io) actors.
 It consists of two simple actors:
 
-1. A `Calculator` which does simple stateless arithmetic.
+1. A `Calculator` which does stateless arithmetic.
 2. An `Accumulator` which accumulates values passed to it in a mutable set.
 
 The `CalculatorSpec` unit tests show how to test actors.
