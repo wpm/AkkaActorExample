@@ -5,7 +5,7 @@ This project contains examples of how to create and unit test [Akka](http://akka
 It consists of two simple actors:
 
 1. A `Calculator` which does stateless arithmetic.
-2. An `Accumulator` which accumulates values passed to it in a mutable set.
+2. An `Accumulator` which statefully accumulates values passed to it.
 
 The `CalculatorSpec` unit tests show how to test actors.
 The `Calculator` companion object also contains a `main` function that is an example of how to use for-comprehension on futures.
