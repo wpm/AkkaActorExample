@@ -29,7 +29,7 @@ object Calculator {
   case class Divide(x: Int, y: Int)
 
   def main(args: Array[String]) {
-    val system = ActorSystem("Math")
+    val system = ActorSystem("Example")
     val calculator = system.actorOf(Props[Calculator], "Calculator")
 
     implicit val timeout = Timeout(10.seconds)
