@@ -1,12 +1,12 @@
-package com.github.wpm.AkkaToy
+package com.github.wpm.AkkaActorExample
 
-import akka.actor.{Props, ActorSystem, Actor, ActorLogging}
+import akka.actor.{Props, ActorSystem, Actor}
 import akka.pattern.ask
+import akka.util.Timeout
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import akka.util.Timeout
 
-class Calculator extends Actor with ActorLogging {
+class Calculator extends Actor {
 
   import Calculator._
 
@@ -32,8 +32,14 @@ object Calculator {
     val system = ActorSystem("Math")
     val calculator = system.actorOf(Props[Calculator], "Calculator")
 
-    implicit val timeout = Timeout(10 seconds)
-    val result = Await.result(calculator ? Add(2, 4), 10 seconds)
+    implicit val timeout = Timeout(10.seconds)
+
+    import scala.concurrent.ExecutionContext.Implicits.global
+    val resultFuture = for (twoPlusFour <- (calculator ? Add(2, 4)).mapTo[Int];
+                            sixMinusThree <- (calculator ? Subtract(6, 3)).mapTo[Int];
+                            product <- (calculator ? Multiply(twoPlusFour, sixMinusThree)).mapTo[Int])
+    yield product
+    val result = Await.result(resultFuture, 10.seconds)
     println(result)
 
     system.shutdown()
